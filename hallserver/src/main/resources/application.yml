@@ -1,0 +1,27 @@
+logging:
+  level:
+    root: info
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+  redis:
+    host: localhost
+    port: 6379
+    password:
+hall:
+  routes:
+    1: hallserver
+    2: yingsanzhang
+    3: paodekuai
+    4: baijiale
+    5: douniu
+  name: hallserver
+netty-websocket:
+  host: 127.0.0.1
+  port: 8083
+#  path: /hall
+jwt:
+  secret: ASDF1234a
+  expiration: 120000
