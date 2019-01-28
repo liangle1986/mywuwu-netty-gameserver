@@ -1,0 +1,15 @@
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+  redis:
+    host: 192.168.6.122
+    port: 6379
+    password:
+logicserver:
+  name: yingsanzhang
+  connector: hallserver
+jwt:
+  secret: ASDF1234a
+  expiration: 120000

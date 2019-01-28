@@ -7,7 +7,7 @@ spring:
       host: localhost
       port: 27017
   redis:
-    host: localhost
+    host: 192.168.6.122
     port: 6379
     password:
 hall:
@@ -19,7 +19,7 @@ hall:
     5: douniu
   name: hallserver
 netty-websocket:
-  host: 127.0.0.1
+  host: 192.168.6.248
   port: 8083
 #  path: /hall
 jwt:
