@@ -1,6 +1,6 @@
 package com.mywuwu.gameserver.core.websocket;
 
-import com.linkflywind.gameserver.core.security.JwtTokenUtil;
+import com.mywuwu.gameserver.core.security.JwtTokenUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelId;
 import io.netty.handler.codec.http.HttpHeaders;
@@ -38,7 +38,7 @@ public abstract class GameWebSocket {
 
     @OnOpen
     public void onOpen(Session session, HttpHeaders headers, ParameterMap parameterMap) throws IOException {
-        String id = "2";
+        String id = "1";
 //                parameterMap.getParameter("id");
         String token = parameterMap.getParameter("token");
 
@@ -151,4 +151,9 @@ public abstract class GameWebSocket {
         session.sendBinary(buf);
     }
 
+//    @OnMessage
+//    public void onMessage(Session session, String message) {
+//        System.out.println(message + "======="+ map.get(session.id()));
+////        session.sendText("Hello Netty!");
+//    }
 }

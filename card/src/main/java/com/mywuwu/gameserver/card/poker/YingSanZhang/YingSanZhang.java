@@ -1,7 +1,7 @@
 package com.mywuwu.gameserver.card.poker.YingSanZhang;
 
 
-import com.mywuwu.game.card.poker.Poker;
+import com.mywuwu.gameserver.card.poker.Poker;
 
 import java.util.ArrayList;
 import java.util.Comparator;

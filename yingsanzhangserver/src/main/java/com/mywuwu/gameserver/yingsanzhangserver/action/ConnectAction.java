@@ -17,6 +17,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+/**
+ * 链接房间
+ */
 @Component
 @Protocol(1002)
 public class ConnectAction extends BaseAction implements RoomAction<A1001Request, YingSanZhangRoomContext> {

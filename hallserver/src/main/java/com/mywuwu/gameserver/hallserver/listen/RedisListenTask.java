@@ -1,7 +1,8 @@
 package com.mywuwu.gameserver.hallserver.listen;
 
-import com.linkflywind.gameserver.core.TransferData;
-import com.linkflywind.gameserver.hallserver.config.HallConfig;
+import com.mywuwu.gameserver.core.TransferData;
+import com.mywuwu.gameserver.hallserver.GameServer;
+import com.mywuwu.gameserver.hallserver.config.HallConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class RedisListenTask {
         if (transferData.getData() != null) {
             logger.info(new String(transferData.getData()));
 
+            System.out.println(Integer.valueOf(hallConfig.getReverseRoutes().get(transferData.getChannel())));
             GameServer.send(Integer.valueOf(hallConfig.getReverseRoutes().get(transferData.getChannel())),
                     Integer.valueOf(transferData.getProtocol()),
                     transferData.getGameWebSocketSession().getSessionId(),

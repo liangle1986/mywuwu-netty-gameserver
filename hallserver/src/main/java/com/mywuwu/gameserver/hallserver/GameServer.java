@@ -1,11 +1,11 @@
 package com.mywuwu.gameserver.hallserver;
 
 
-import com.linkflywind.gameserver.core.TransferData;
-import com.linkflywind.gameserver.core.action.DispatcherAction;
-import com.linkflywind.gameserver.core.network.websocket.GameWebSocket;
-import com.linkflywind.gameserver.core.network.websocket.GameWebSocketSession;
-import com.linkflywind.gameserver.hallserver.config.HallConfig;
+import com.mywuwu.gameserver.core.TransferData;
+import com.mywuwu.gameserver.core.action.DispatcherAction;
+import com.mywuwu.gameserver.core.websocket.GameWebSocket;
+import com.mywuwu.gameserver.core.websocket.GameWebSocketSession;
+import com.mywuwu.gameserver.hallserver.config.HallConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +17,12 @@ import org.yeauty.annotation.ServerEndpoint;
 public class GameServer extends GameWebSocket {
 
     @Autowired
-    private  DispatcherAction dispatcherAction;
+    private DispatcherAction dispatcherAction;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    private  HallConfig hallConfig;
+    private HallConfig hallConfig;
 
     @Override
     protected boolean receiveHandle(GameWebSocketSession session, int channel, int protocol, byte[] buffer) {
@@ -38,10 +38,10 @@ public class GameServer extends GameWebSocket {
     @Override
     protected void openHandle(GameWebSocketSession session) {
 
-        session.setChannel("yingsanzhang");
+        session.setChannel("hallserver");
         if(session.getChannel() != null && !session.getChannel().isEmpty())
         {
-            this.redisTemplate.convertAndSend(session.getChannel(), new TransferData(session, "", 1001, null));
+            this.redisTemplate.convertAndSend(session.getChannel(), new TransferData(session, "", 1002, "sadfasdfasdfas".getBytes()));
         }
     }
 

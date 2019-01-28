@@ -12,7 +12,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
                 "com.mywuwu.gameserver.core"
         })
 @Configuration
-@EnableAsync
+//@EnableAsync
 public class HallServerApplication {
 
     public static void main(String[] args) {

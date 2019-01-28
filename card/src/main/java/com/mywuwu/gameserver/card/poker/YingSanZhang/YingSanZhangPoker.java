@@ -1,7 +1,7 @@
 package com.mywuwu.gameserver.card.poker.YingSanZhang;
 
 
-import com.mywuwu.game.card.poker.PokerManager;
+import com.mywuwu.gameserver.card.poker.PokerManager;
 
 public class YingSanZhangPoker extends PokerManager {
     public YingSanZhang getPocker(){

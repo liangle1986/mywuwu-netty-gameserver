@@ -58,7 +58,7 @@ public class A1003Action extends BaseAction implements RoomAction<A1003Request, 
         Optional<UserModel> optionalUserModel = this.userRepository.findById(Long.valueOf(id));
 
 
-        if (false) {
+        if (session.getRoomNumber() == null || session.getRoomNumber().isEmpty()) {
             optionalUserModel.ifPresent(userModel -> {
                 if (userModel.getUserType() > 0) {
                     YingSanZhangPlayer p = new YingSanZhangPlayer(1000, true, session);
