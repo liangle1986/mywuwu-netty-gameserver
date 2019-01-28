@@ -1,5 +1,8 @@
 package com.mywuwu.gameserver.core.websocket;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.mywuwu.gameserver.core.TransferData;
 import com.mywuwu.gameserver.core.security.JwtTokenUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelId;
@@ -19,6 +22,8 @@ import org.yeauty.pojo.Session;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class GameWebSocket {
@@ -38,10 +43,9 @@ public abstract class GameWebSocket {
 
     @OnOpen
     public void onOpen(Session session, HttpHeaders headers, ParameterMap parameterMap) throws IOException {
-        String id = "1";
-//                parameterMap.getParameter("id");
+        String id = parameterMap.getParameter("id");
         String token = parameterMap.getParameter("token");
-
+//        jwtTokenUtil.validateToken(token, id)
 
         if (true) {
 
@@ -106,7 +110,8 @@ public abstract class GameWebSocket {
         ValueOperations<String, GameWebSocketSession> valueOperationsByGameWebSocketSession = this.redisTemplate.opsForValue();
 
         GameWebSocketSession gameWebSocketSession = valueOperationsByGameWebSocketSession.get(attributeName.get());
-
+        channel = 2;
+        protocol = 1003;
         receiveHandle(gameWebSocketSession,
                 channel,
                 protocol,
@@ -134,12 +139,35 @@ public abstract class GameWebSocket {
         }
     }
 
+    @OnMessage
+    public void onMessage(Session session, String message) {
+        JSONObject obj = JSON.parseObject(message);
+        String id = "1";
+//                obj.getString("id");
+        System.out.println(message + "=======" + map.get(session.id()));
+        ValueOperations<String, GameWebSocketSession> valueOperationsByGameWebSocketSession = this.redisTemplate.opsForValue();
+        Map<String, Object> map = new HashMap<>();
+        map.put("playerLowerlimit","1");
+        map.put("playerUpLimit","5");
+        map.put("xiaZhuTop","2");
+        map.put("juShu","15");
+        GameWebSocketSession gameWebSocketSession = valueOperationsByGameWebSocketSession.get(id);
+        gameWebSocketSession.setSessionId(session.id());
+        gameWebSocketSession.setRoomNumber("10006");
+        TransferData transferData = new TransferData(gameWebSocketSession, "yingsanzhang", 1003, JSON.toJSONString(map).getBytes());
+        onMessageHandle(transferData);
+//        session.sendText("Hello Netty!");
+
+    }
+
     protected abstract boolean receiveHandle(GameWebSocketSession session, int channel, int protocol,
                                              byte[] buffer);
 
     protected abstract void openHandle(GameWebSocketSession session);
 
     protected abstract void closeHandle(GameWebSocketSession session);
+
+    protected abstract void onMessageHandle(TransferData transferData);
 
     public static void send(int channel, int protocol, ChannelId sessionId, byte[] buffer) {
         Session session = map.get(sessionId);
@@ -151,9 +179,5 @@ public abstract class GameWebSocket {
         session.sendBinary(buf);
     }
 
-//    @OnMessage
-//    public void onMessage(Session session, String message) {
-//        System.out.println(message + "======="+ map.get(session.id()));
-////        session.sendText("Hello Netty!");
-//    }
+
 }

@@ -37,8 +37,6 @@ public class GameServer extends GameWebSocket {
 
     @Override
     protected void openHandle(GameWebSocketSession session) {
-
-        session.setChannel("hallserver");
         if(session.getChannel() != null && !session.getChannel().isEmpty())
         {
             this.redisTemplate.convertAndSend(session.getChannel(), new TransferData(session, "", 1002, "sadfasdfasdfas".getBytes()));
@@ -51,4 +49,12 @@ public class GameServer extends GameWebSocket {
             this.redisTemplate.convertAndSend(session.getChannel(), new TransferData(session, "", 1002, null));
         }
     }
+
+    @Override
+    protected void onMessageHandle(TransferData transferData) {
+        if(transferData != null){
+            this.redisTemplate.convertAndSend(transferData.getChannel(), transferData);
+        }
+    }
+
 }
