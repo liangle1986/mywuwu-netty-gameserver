@@ -6,11 +6,11 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 
 @SpringBootApplication(scanBasePackages =
-        {"com.linkflywind.gameserver.loginserver",
-                "com.linkflywind.gameserver.data",
-                "com.linkflywind.gameserver.core"
+        {"com.mywuwu.gameserver.webserver",
+                "com.mywuwu.gameserver.data",
+                "com.mywuwu.gameserver.core"
         })
-@EnableMongoRepositories("com.linkflywind.gameserver.data")
+@EnableMongoRepositories("com.mywuwu.gameserver.data")
 public class WebServerApplication {
     public static void main(String[] args) {
         SpringApplication.run(WebServerApplication.class);

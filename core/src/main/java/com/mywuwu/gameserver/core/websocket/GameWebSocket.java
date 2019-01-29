@@ -99,6 +99,7 @@ public abstract class GameWebSocket {
 
     @OnBinary
     public void onBinary(Session session, byte[] bytes) {
+        System.out.println(new String(bytes));
         int channel = (int) bytes[0];
         int protocol = (bytes[1] << 8 | (bytes[2] & 0xFF));
         byte[] buffer = null;
@@ -106,12 +107,10 @@ public abstract class GameWebSocket {
             buffer = Arrays.copyOfRange(bytes, 3, bytes.length);
 
         Attribute<String> attributeName = session.channel().attr(channelNameKey);
-
-        ValueOperations<String, GameWebSocketSession> valueOperationsByGameWebSocketSession = this.redisTemplate.opsForValue();
-
-        GameWebSocketSession gameWebSocketSession = valueOperationsByGameWebSocketSession.get(attributeName.get());
         channel = 2;
         protocol = 1003;
+        ValueOperations<String, GameWebSocketSession> valueOperationsByGameWebSocketSession = this.redisTemplate.opsForValue();
+        GameWebSocketSession gameWebSocketSession = valueOperationsByGameWebSocketSession.get(attributeName.get());
         receiveHandle(gameWebSocketSession,
                 channel,
                 protocol,
@@ -142,20 +141,32 @@ public abstract class GameWebSocket {
     @OnMessage
     public void onMessage(Session session, String message) {
         JSONObject obj = JSON.parseObject(message);
-        String id = "1";
+        int channel = obj.getInteger("channel");
+        int protocol = obj.getInteger("protocol");
 //                obj.getString("id");
-        System.out.println(message + "=======" + map.get(session.id()));
+        byte[] data = obj.getString("data").getBytes();
+
+
+        Attribute<String> attributeName = session.channel().attr(channelNameKey);
+
         ValueOperations<String, GameWebSocketSession> valueOperationsByGameWebSocketSession = this.redisTemplate.opsForValue();
-        Map<String, Object> map = new HashMap<>();
-        map.put("playerLowerlimit","1");
-        map.put("playerUpLimit","5");
-        map.put("xiaZhuTop","2");
-        map.put("juShu","15");
-        GameWebSocketSession gameWebSocketSession = valueOperationsByGameWebSocketSession.get(id);
-        gameWebSocketSession.setSessionId(session.id());
-        gameWebSocketSession.setRoomNumber("10006");
-        TransferData transferData = new TransferData(gameWebSocketSession, "yingsanzhang", 1003, JSON.toJSONString(map).getBytes());
-        onMessageHandle(transferData);
+        GameWebSocketSession gameWebSocketSession = valueOperationsByGameWebSocketSession.get(attributeName.get());
+        receiveHandle(gameWebSocketSession, channel, protocol, data);
+
+//        ValueOperations<String, GameWebSocketSession> valueOperationsByGameWebSocketSession = this.redisTemplate.opsForValue();
+//        GameWebSocketSession gameWebSocketSession = valueOperationsByGameWebSocketSession.get(attributeName.get());
+//        System.out.println(message + "=======" + map.get(session.id()));
+//        ValueOperations<String, GameWebSocketSession> valueOperationsByGameWebSocketSession = this.redisTemplate.opsForValue();
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("playerLowerlimit","1");
+//        map.put("playerUpLimit","5");
+//        map.put("xiaZhuTop","2");
+//        map.put("juShu","15");
+//        GameWebSocketSession gameWebSocketSession = valueOperationsByGameWebSocketSession.get(id);
+//        gameWebSocketSession.setSessionId(session.id());
+//        gameWebSocketSession.setRoomNumber("10006");
+//        TransferData transferData = new TransferData(gameWebSocketSession, "yingsanzhang", 1003, JSON.toJSONString(map).getBytes());
+//        onMessageHandle(transferData);
 //        session.sendText("Hello Netty!");
 
     }
@@ -176,7 +187,13 @@ public abstract class GameWebSocket {
         buf.writeByte(protocol >> 8);
         buf.writeByte(protocol & 0xFF);
         buf.writeBytes(buffer);
-        session.sendBinary(buf);
+//        session.sendBinary(buffer);
+        session.sendText(new String(buffer));
+    }
+
+    public static void send(ChannelId sessionId, String buffer) {
+        Session session = map.get(sessionId);
+        session.sendText(buffer);
     }
 
 

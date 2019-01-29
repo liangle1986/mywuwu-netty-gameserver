@@ -51,7 +51,8 @@ public class YingSanZhangRoomActorManager extends RoomManager {
                                   int juShu) {
         String roomNumber = RedisTool.inc(this.redisTemplate, "room", -1);
 
-        YingSanZhangRoomContext yingSanZhangRoomContext = (YingSanZhangRoomContext) context.getBean("YingSanZhangRoomContext",roomNumber,
+        YingSanZhangRoomContext yingSanZhangRoomContext = (YingSanZhangRoomContext) context.getBean(YingSanZhangRoomContext.class
+                ,roomNumber,
                 playerUpLimit,
                 playerLowerlimit,
                 redisTemplate,
