@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * 数据权限类型
+ * 数据移交类
  */
 @Data
 @NoArgsConstructor
