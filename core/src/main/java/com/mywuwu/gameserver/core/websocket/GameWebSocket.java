@@ -22,10 +22,12 @@ import org.yeauty.pojo.Session;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * websocket 初始化类
+ * websocket 初始化类
+ */
 public abstract class GameWebSocket {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 

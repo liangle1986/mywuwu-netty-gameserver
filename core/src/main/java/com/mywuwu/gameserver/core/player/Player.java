@@ -5,11 +5,30 @@ import lombok.Data;
 
 @Data
 public class Player {
+    /**
+     * 游戏的socket
+     */
     private GameWebSocketSession gameWebSocketSession;
+    /**
+     * 筹码
+     */
     public int chip;
+    /**
+     * 是否准备
+     */
     private boolean isReady;
+    /**
+     * 房间号
+     */
     private String roomId;
+    /**
+     * 默认关系
+     */
     private boolean isDisConnection;
+
+    /**
+     * 默认原型
+     */
     private boolean isDisbanded;
 
     private boolean isOp;

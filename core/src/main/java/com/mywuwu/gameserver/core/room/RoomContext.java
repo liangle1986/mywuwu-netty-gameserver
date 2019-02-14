@@ -16,22 +16,62 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+/**
+ * 房间信息
+ */
 @Data
 @Component
 @Scope(value = "prototype")
 @NoArgsConstructor
 public abstract class RoomContext {
+    /**
+     * 房间号
+     */
     protected String roomNumber;
+    /**
+     * 开始/结束
+     */
     protected int playerUpLimit;
+    /**
+     * 下局开始/结束
+     */
     protected int playerLowerlimit;
+    /**
+     * 缓存
+     */
     protected RedisTemplate redisTemplate;
+    /**
+     * 播放信息
+     */
     protected Player master;
+    /**
+     * 是否存在
+     */
     protected boolean isDisbanded;
+    /**
+     * 回合
+     */
     protected int inningsNumber;
+    /**
+     * 当前局
+     */
     protected int currentInningsNUmber;
+    /**
+     * 服务名
+     */
     protected String serverName;
+    /**
+     * 链接名
+     */
     protected String connectorName;
+
+    /**
+     * 局集合
+     */
     protected volatile CircularList<? super Player> playerList;
+    /**
+     * 房间信息
+     */
     protected RoomManager roomManager;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());

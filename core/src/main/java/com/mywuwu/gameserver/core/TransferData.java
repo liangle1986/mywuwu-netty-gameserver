@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
+/**
+ * 数据权限类型
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

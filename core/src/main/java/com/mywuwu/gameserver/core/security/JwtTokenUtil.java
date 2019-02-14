@@ -11,6 +11,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+/**
+ * 安全监测
+ */
 @Component
 public class  JwtTokenUtil {
 

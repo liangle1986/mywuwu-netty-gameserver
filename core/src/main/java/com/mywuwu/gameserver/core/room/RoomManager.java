@@ -13,17 +13,41 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * 房间消息信息
+ */
 @Data
 @Component
 public abstract class RoomManager {
+    /**
+     * 保存全部房间模型
+     */
     protected ConcurrentHashMap<String, ActorRef> map = new ConcurrentHashMap<>();
+    /**
+     * 缓存房间处理
+     */
     Map<Integer, RoomAction> cacheMap = new HashMap<>();
 
 
+    /**
+     * 链接名
+     */
     protected String connectorName;
+    /**
+     * 服务名
+     */
     protected String serverName;
+    /**
+     * 缓存名
+     */
     protected RedisTemplate redisTemplate;
+    /**
+     * 模型对象
+     */
     protected ActorSystem actorSystem;
+    /**
+     * spring反射类
+     */
     protected ApplicationContext context;
 
 

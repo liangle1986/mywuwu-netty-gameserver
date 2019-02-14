@@ -4,6 +4,9 @@ import akka.actor.AbstractActor;
 import com.mywuwu.gameserver.core.annotation.Protocol;
 import com.mywuwu.gameserver.core.room.message.baseMessage.RoomMessage;
 
+/**
+ * 通过akka创建房间模型
+ */
 public class Room extends AbstractActor {
 
     private RoomContext roomContext;

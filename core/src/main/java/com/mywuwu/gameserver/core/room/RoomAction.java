@@ -1,6 +1,8 @@
 package com.mywuwu.gameserver.core.room;
 
-
+/**
+ * 房间处理类
+ */
 public interface RoomAction<T,D> {
     /**
      * 房间消息处理类
