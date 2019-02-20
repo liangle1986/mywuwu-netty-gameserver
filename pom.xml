@@ -13,6 +13,7 @@
         <module>yingsanzhangserver</module>
         <module>data</module>
         <module>card</module>
+        <module>mapper</module>
     </modules>
     <packaging>pom</packaging>
 

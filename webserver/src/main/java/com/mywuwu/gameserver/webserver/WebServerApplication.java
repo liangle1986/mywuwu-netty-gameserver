@@ -8,7 +8,8 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @SpringBootApplication(scanBasePackages =
         {"com.mywuwu.gameserver.webserver",
                 "com.mywuwu.gameserver.data",
-                "com.mywuwu.gameserver.core"
+                "com.mywuwu.gameserver.core",
+                "com.mywuwu.gameserver.mapper"
         })
 @EnableMongoRepositories("com.mywuwu.gameserver.data")
 public class WebServerApplication {

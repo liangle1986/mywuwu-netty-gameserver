@@ -1,12 +1,10 @@
 package com.mywuwu.gameserver.hallserver;
 
 
-import com.alibaba.fastjson.JSON;
 import com.mywuwu.gameserver.core.TransferData;
 import com.mywuwu.gameserver.core.action.DispatcherAction;
 import com.mywuwu.gameserver.core.websocket.GameWebSocket;
 import com.mywuwu.gameserver.core.websocket.GameWebSocketSession;
-import com.mywuwu.gameserver.hallserver.action.A10000Action;
 import com.mywuwu.gameserver.hallserver.config.HallConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.yeauty.annotation.ServerEndpoint;
 
-import java.util.HashMap;
-import java.util.Map;
 
 @Component
 @ServerEndpoint(prefix = "netty-websocket")
@@ -59,7 +55,7 @@ public class GameServer extends GameWebSocket {
     @Override
     protected void closeHandle(GameWebSocketSession session) {
         if(session.getChannel() != null && !session.getChannel().isEmpty()){
-            this.redisTemplate.convertAndSend(session.getChannel(), new TransferData(session, "", 1002, null));
+            this.redisTemplate.convertAndSend(session.getChannel(), new TransferData(session, "", 1001, null));
         }
     }
 

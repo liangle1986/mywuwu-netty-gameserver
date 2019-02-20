@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml" />
+    <!-- 这一句至关重要如果没有，就无法输出sql语句 -->
+    <logger name="com.mywuwu.gameserver.mapper.service" level="DEBUG"></logger>
+ </configuration>

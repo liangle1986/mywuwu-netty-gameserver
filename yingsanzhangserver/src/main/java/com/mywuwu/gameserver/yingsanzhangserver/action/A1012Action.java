@@ -18,6 +18,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 取消房间
+ */
 @Component
 @Protocol(1012)
 public class A1012Action extends BaseAction implements RoomAction<A1012Request, YingSanZhangRoomContext> {

@@ -10,7 +10,7 @@ public class PokerManager {
         PokerNumber[] pokerNumber = PokerNumber.values();
         PokerType[] pokerTypes = PokerType.values();
 
-        for (int i = 0; i < pokerTypes.length; i++) {
+        for (int i = 0; i < pokerNumber.length; i++) {
             for (int j = 0; j < pokerTypes.length; j++) {
                 pokers.add(new Poker(pokerNumber[i], pokerTypes[j]));
             }

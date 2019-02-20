@@ -39,7 +39,7 @@ public class A10000Action extends BaseAction implements RoomAction<A10000Request
 
 //        Optional<UserModel> optionalUserModel = this.userRepository.findById(Long.valueOf(id));
 
-        GameServer.send(session.getSessionId(), JSON.toJSONString(new A10000Response("asfasdfdasdfdasdfasfdasdfas")));
+        send(new A10000Response("asfasdfdasdfdasdfasfdasdfas"),optionalTransferData, null);
     }
 
     @Override

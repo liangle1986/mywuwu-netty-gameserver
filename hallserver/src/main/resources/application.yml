@@ -21,7 +21,7 @@ hall:
 netty-websocket:
   host: 192.168.6.248
   port: 8083
-#  path: /hall
+  path: /hall
 jwt:
   secret: ASDF1234a
   expiration: 120000

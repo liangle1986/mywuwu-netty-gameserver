@@ -10,6 +10,8 @@ import com.mywuwu.gameserver.core.security.JwtTokenUtil;
 import com.mywuwu.gameserver.core.websocket.GameWebSocketSession;
 import com.mywuwu.gameserver.data.monoModel.UserModel;
 import com.mywuwu.gameserver.data.monoRepository.UserRepository;
+import com.mywuwu.gameserver.mapper.entity.Test;
+import com.mywuwu.gameserver.mapper.service.TestService;
 import com.mywuwu.gameserver.webserver.config.GameConfig;
 import com.mywuwu.gameserver.webserver.protocol.GuestResponse;
 import com.mywuwu.gameserver.webserver.protocol.LoginRequest;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -38,17 +41,20 @@ public class LoginController {
 
     private final JwtTokenUtil jwtTokenUtil;
 
+    private final TestService testService;
+
 
     @Autowired
     public LoginController(UserRepository userRepository,
                            GameConfig config,
                            RedisTemplate redisTemplate,
-                           JwtTokenUtil jwtTokenUtil) {
+                           JwtTokenUtil jwtTokenUtil, TestService testService) {
         this.userRepository = userRepository;
         this.config = config;
         this.redisTemplate = redisTemplate;
         this.jwtTokenUtil = jwtTokenUtil;
         this.valueOperationsByGameWebSocketSession = this.redisTemplate.opsForValue();
+        this.testService = testService;
     }
 
 
@@ -72,6 +78,8 @@ public class LoginController {
 
     @GetMapping("api/guest")
     public GuestResponse guest(String deviceId) {
+        List<Test> list = testService.getTest();
+        System.out.println(list.size());
         UserModel userModel = userRepository.findByNameAndUserType(deviceId, 1);
         if (userModel == null) {
             userModel = new UserModel();
@@ -90,7 +98,7 @@ public class LoginController {
 
         String token = jwtTokenUtil.generateToken(String.valueOf(userModel.getId()));
         return new GuestResponse(userModel.getId()
-                ,userModel.getName(),
+                , userModel.getName(),
                 userModel.getNickName(),
                 token,
                 0,
@@ -104,12 +112,12 @@ public class LoginController {
         //todo 验证码
         UserModel userModel = new UserModel();
 
-        userModel.setName( registerForm.getName());
-        userModel.setNickName( registerForm.getNickName());
+        userModel.setName(registerForm.getName());
+        userModel.setNickName(registerForm.getNickName());
         userModel.setBalance(0);
         userModel.setCardNumber(3);
-        userModel.setMobileNumber( registerForm.getMobileNumber());
-        userModel.setPassword( registerForm.getPassword());
+        userModel.setMobileNumber(registerForm.getMobileNumber());
+        userModel.setPassword(registerForm.getPassword());
         userModel.setSex("0");
         userModel.setSponsor("");
         userModel.setUserType(0);

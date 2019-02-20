@@ -3,31 +3,60 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.1.2.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<artifactId>gameserver</artifactId>
+		<groupId>com.mywuwu</groupId>
+		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<groupId>com.mywuwu.gameserver</groupId>
 	<artifactId>mapper</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>mapper</name>
-	<description>Demo project for Spring Boot</description>
-
-	<properties>
-		<java.version>1.8</java.version>
-	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
+			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.49</version>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<!--<version>5.1.46</version>-->
+		</dependency>
+
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>1.0.23</version>
+		</dependency>
+		<!-- mybatis -->
+		<dependency>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+		<!-- mybatis通用mapper -->
+		<dependency>
+			<groupId>tk.mybatis</groupId>
+			<artifactId>mapper-spring-boot-starter</artifactId>
+			<version>1.2.3</version>
+		</dependency>
+
+
+		<!-- 分页插件mapper -->
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper-spring-boot-starter</artifactId>
+			<version>1.2.3</version>
 		</dependency>
 	</dependencies>
 
@@ -37,6 +66,28 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+            <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+                <version>1.3.6</version>
+                <configuration>
+                    <configurationFile>${basedir}/src/main/resources/generatorConfig.xml</configurationFile>
+                    <overwrite>true</overwrite>
+                    <verbose>true</verbose>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>5.1.46</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>tk.mybatis</groupId>
+                        <artifactId>mapper</artifactId>
+                        <version>3.5.2</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
 		</plugins>
 	</build>
 

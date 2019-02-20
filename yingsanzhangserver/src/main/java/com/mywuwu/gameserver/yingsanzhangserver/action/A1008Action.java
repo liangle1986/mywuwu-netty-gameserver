@@ -19,6 +19,9 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.Optional;
 
+/**
+ * 比牌
+ */
 @Component
 @Protocol(1008)
 public class A1008Action extends BaseAction implements RoomAction<A1008Request, YingSanZhangRoomContext> {
