@@ -34,11 +34,9 @@ public class A1012Action extends BaseAction implements RoomAction<A1012Request, 
 
         if (optionalTransferData.getData() != null) {
             try {
-                Map<String,String> map = new HashMap<>();
-                A1012Request a1009Request = unPackJson(optionalTransferData.getData(), A1012Request.class);
-
-                ActorRef actorRef = roomActorManager.getRoomActorRef(a1009Request.getRoomId());
-                actorRef.tell(a1009Request, null);
+                A1012Request a1012Request = unPackJson(optionalTransferData.getData(), A1012Request.class);
+                ActorRef actorRef = roomActorManager.getRoomActorRef(a1012Request.getRoomId());
+                actorRef.tell(a1012Request, null);
             } catch (IOException e) {
 
             }

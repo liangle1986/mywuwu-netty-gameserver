@@ -50,6 +50,8 @@ public class A1004Action extends BaseAction implements RoomAction<A1004Request, 
     public void roomAction(A1004Request message, YingSanZhangRoomContext context) {
         GameWebSocketSession session = this.valueOperationsByGameWebSocketSession.get(message.getName());
         YingSanZhangPlayer player = new YingSanZhangPlayer(1000, true, session);
+
+        //验证房间人数上限
         if (context.getPlayerList().size() <= context.getPlayerUpLimit()) {
             context.getPlayerList().add(player);
             session.setRoomNumber(context.getRoomNumber());
@@ -59,6 +61,7 @@ public class A1004Action extends BaseAction implements RoomAction<A1004Request, 
 
             context.sendAll(new A1004Response(context.getPlayerList().toArray(new YingSanZhangPlayer[0])[0], context.getRoomNumber()), 1004);
 
+            // 判断是否符合最小开局人数
             if (context.getPlayerList().size() >= context.getPlayerLowerlimit()) {
                 context.beginGame();
             }

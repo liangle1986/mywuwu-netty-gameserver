@@ -29,11 +29,11 @@ public abstract class RoomContext {
      */
     protected String roomNumber;
     /**
-     * 开始/结束
+     * 开始/结束（最大人数）
      */
     protected int playerUpLimit;
     /**
-     * 下局开始/结束
+     * 下局开始/结束（最小人数）
      */
     protected int playerLowerlimit;
     /**
@@ -45,7 +45,7 @@ public abstract class RoomContext {
      */
     protected Player master;
     /**
-     * 是否存在
+     * 是否存在 true统一取消false不同意
      */
     protected boolean isDisbanded;
     /**

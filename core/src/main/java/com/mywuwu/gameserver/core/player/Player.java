@@ -27,7 +27,7 @@ public class Player {
     private boolean isDisConnection;
 
     /**
-     * 默认原型
+     * 默认原型（没有开始游戏）
      */
     private boolean isDisbanded;
 

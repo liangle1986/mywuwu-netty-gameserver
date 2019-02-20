@@ -18,6 +18,9 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 public class YingSanZhangRoomContext extends RoomContext {
 
+    /**
+     * 筹码
+     */
     public double deskChip;
     private YingSanZhangPoker poker = new YingSanZhangPoker();
 
@@ -54,12 +57,15 @@ public class YingSanZhangRoomContext extends RoomContext {
 
     public void next() {
         long count = this.playerList.stream().filter(p -> ((YingSanZhangPlayer) p).getState() == YingSanZhangPlayerState.none).count();
+
+        // 通知一个房间所以玩家
         if (count == 1) {
             YingSanZhangPlayer yingSanZhangPlayer = (YingSanZhangPlayer) this.playerList.stream().filter(p -> ((YingSanZhangPlayer) p).getState() == YingSanZhangPlayerState.win).findFirst().get();
             yingSanZhangPlayer.chip += this.deskChip;
             sendAll(yingSanZhangPlayer, 1009);
         }
 
+        // 通知继续在玩的玩家
         for (int i = 0; i < this.getPlayerList().size(); i++) {
             YingSanZhangPlayer player = (YingSanZhangPlayer) this.playerList.poll();
             if (player.getState() != YingSanZhangPlayerState.shu &&
