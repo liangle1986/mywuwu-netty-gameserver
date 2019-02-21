@@ -10,8 +10,8 @@ import com.mywuwu.gameserver.core.security.JwtTokenUtil;
 import com.mywuwu.gameserver.core.websocket.GameWebSocketSession;
 import com.mywuwu.gameserver.data.monoModel.UserModel;
 import com.mywuwu.gameserver.data.monoRepository.UserRepository;
-import com.mywuwu.gameserver.mapper.entity.Test;
-import com.mywuwu.gameserver.mapper.service.TestService;
+import com.mywuwu.gameserver.mapper.entity.User;
+import com.mywuwu.gameserver.mapper.service.UserService;
 import com.mywuwu.gameserver.webserver.config.GameConfig;
 import com.mywuwu.gameserver.webserver.protocol.GuestResponse;
 import com.mywuwu.gameserver.webserver.protocol.LoginRequest;
@@ -41,20 +41,20 @@ public class LoginController {
 
     private final JwtTokenUtil jwtTokenUtil;
 
-    private final TestService testService;
+    private final UserService userService;
 
 
     @Autowired
     public LoginController(UserRepository userRepository,
                            GameConfig config,
                            RedisTemplate redisTemplate,
-                           JwtTokenUtil jwtTokenUtil, TestService testService) {
+                           JwtTokenUtil jwtTokenUtil, UserService userService) {
         this.userRepository = userRepository;
         this.config = config;
         this.redisTemplate = redisTemplate;
         this.jwtTokenUtil = jwtTokenUtil;
         this.valueOperationsByGameWebSocketSession = this.redisTemplate.opsForValue();
-        this.testService = testService;
+        this.userService = userService;
     }
 
 
@@ -78,7 +78,7 @@ public class LoginController {
 
     @GetMapping("api/guest")
     public GuestResponse guest(String deviceId) {
-        List<Test> list = testService.getTest();
+        List<User> list = userService.getTest();
         System.out.println(list.size());
         UserModel userModel = userRepository.findByNameAndUserType(deviceId, 1);
         if (userModel == null) {
