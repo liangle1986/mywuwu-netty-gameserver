@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mywuwu.gameserver.mapper.mapper.MywuwuOrderMapper">
+  <resultMap id="BaseResultMap" type="com.mywuwu.gameserver.mapper.entity.MywuwuOrder">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="product_id" jdbcType="VARCHAR" property="productId" />
+    <result column="room_card_num" jdbcType="INTEGER" property="roomCardNum" />
+    <result column="price" jdbcType="INTEGER" property="price" />
+    <result column="wx_pay_price" jdbcType="INTEGER" property="wxPayPrice" />
+    <result column="transaction_id" jdbcType="VARCHAR" property="transactionId" />
+    <result column="pay_status" jdbcType="TINYINT" property="payStatus" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+</mapper>

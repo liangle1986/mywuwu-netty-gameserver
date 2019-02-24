@@ -11,11 +11,20 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginResponse {
-    private String name;
+
     private String nickName;
-    private String token;
-    private double balance;
-    private int cardNumber;
+
+    private String headImgUrl;
+
+    private String wxOpenId;
+
+    private Integer roomCardNum;
+
+    private Boolean userLevel;
+
+    private Integer winProbability;
 
     private List<GameServerList> gameServerLists;
+
+    private String token;
 }

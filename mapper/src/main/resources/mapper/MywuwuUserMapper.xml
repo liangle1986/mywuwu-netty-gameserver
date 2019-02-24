@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mywuwu.gameserver.mapper.mapper.MywuwuUserMapper">
+    <resultMap id="BaseResultMap" type="com.mywuwu.gameserver.mapper.entity.MywuwuUser">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="nick_name" jdbcType="VARCHAR" property="nickName"/>
+        <result column="head_img_url" jdbcType="VARCHAR" property="headImgUrl"/>
+        <result column="wx_open_id" jdbcType="VARCHAR" property="wxOpenId"/>
+        <result column="room_card_num" jdbcType="INTEGER" property="roomCardNum"/>
+        <result column="user_level" jdbcType="BIT" property="userLevel"/>
+        <result column="win_probability" jdbcType="INTEGER" property="winProbability"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <!-- 设置查询默认字段 -->
+    <sql id="Base_Column_List">
+
+    id, nick_name, head_img_url, wx_open_id, room_card_num, user_level, win_probability, create_time, update_time
+  </sql>
+
+    <!--根据微信公开编号，查询本地是否有当前用户信息-->
+    <select id="selectWeixinCode" resultMap="BaseResultMap" parameterType="String">
+        select
+        <include refid="Base_Column_List"></include>
+        from mywuwu_user where wx_open_id = #{wxOpenId}
+    </select>
+
+
+    <!--<select id="selectDictInfoList" parameterType="com.metadata.dto.DictInfoDto" resultMap="BaseResultMap">-->
+    <!--select * FROM  dict_info${versionCode}-->
+    <!--<trim prefix="where" prefixOverrides="and">-->
+
+    <!--<if test="dictName != null">-->
+    <!--and dict_name like concat('%',#{dictName,jdbcType=VARCHAR},'%')-->
+    <!--</if>-->
+
+    <!--<if test="sqlCommand != null">-->
+    <!--and SQL_command like concat('%',#{sqlCommand,jdbcType=VARCHAR},'%')-->
+    <!--</if>-->
+
+    <!--<if test="dictType != null">-->
+    <!--and dict_type = #{dictType}-->
+    <!--</if>-->
+    <!--<if test="id != null">-->
+    <!--AND id = #{id}-->
+    <!--</if>-->
+    <!--<if test="showOrder != null">-->
+    <!--AND show_order = #{showOrder}-->
+    <!--</if>-->
+    <!--<if test="description != null">-->
+    <!--AND description = like concat('%',#{description,jdbcType=VARCHAR},'%')-->
+    <!--</if>-->
+    <!--</trim>-->
+    <!--order by CONVERT(id,SIGNED)-->
+    <!--</select>-->
+
+
+    <!--<select id="selectDictInfoCount" parameterType="com.metadata.dto.DictInfoDto" resultType="java.lang.Integer">-->
+    <!--select count(id) FROM  dict_info${versionCode}-->
+    <!--<trim prefix="where" prefixOverrides="and">-->
+
+    <!--<if test="dictName != null">-->
+    <!--and dict_name like concat('%',#{dictName,jdbcType=VARCHAR},'%')-->
+    <!--</if>-->
+
+    <!--<if test="sqlCommand != null">-->
+    <!--and SQL_command like concat('%',#{sqlCommand,jdbcType=VARCHAR},'%')-->
+    <!--</if>-->
+
+    <!--<if test="dictType != null">-->
+    <!--and dict_type = #{dictType}-->
+    <!--</if>-->
+
+    <!--<if test="id != null">-->
+    <!--AND id = #{id}-->
+    <!--</if>-->
+
+    <!--<if test="showOrder != null">-->
+    <!--AND show_order = #{showOrder}-->
+    <!--</if>-->
+
+    <!--<if test="description != null">-->
+    <!--AND description = like concat('%',#{description,jdbcType=VARCHAR},'%')-->
+    <!--</if>-->
+    <!--</trim>-->
+    <!--</select>-->
+
+    <select id="selectCountAll" resultType="java.lang.Integer">
+    select count(1) from test
+  </select>
+
+</mapper>

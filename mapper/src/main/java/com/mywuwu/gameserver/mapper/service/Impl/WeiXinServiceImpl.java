@@ -10,4 +10,5 @@ import com.mywuwu.gameserver.mapper.service.WeiXinService;
 public class WeiXinServiceImpl implements WeiXinService {
 
 
+
 }

@@ -1,7 +1,7 @@
 package com.mywuwu.gameserver.mapper.service.Impl;
 
-import com.mywuwu.gameserver.mapper.entity.User;
-import com.mywuwu.gameserver.mapper.mapper.UserMapper;
+import com.mywuwu.gameserver.mapper.entity.MywuwuUser;
+import com.mywuwu.gameserver.mapper.mapper.MywuwuUserMapper;
 import com.mywuwu.gameserver.mapper.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,10 +16,10 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
-    private UserMapper userMapper;
+    private MywuwuUserMapper mywuwuUserMapper;
 
     @Override
-    public List<User> getTest(){
-        return userMapper.selectAll();
+    public MywuwuUser selectWeixinCode(String wxOpenId) {
+        return mywuwuUserMapper.selectWeixinCode(wxOpenId);
     }
 }

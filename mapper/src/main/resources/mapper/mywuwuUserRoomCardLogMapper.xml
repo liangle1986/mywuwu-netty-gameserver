@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mywuwu.gameserver.mapper.mapper.mywuwuUserRoomCardLogMapper">
+  <resultMap id="BaseResultMap" type="com.mywuwu.gameserver.mapper.entity.mywuwuUserRoomCardLog">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="pre_room_card_num" jdbcType="INTEGER" property="preRoomCardNum" />
+    <result column="cur_room_card_num" jdbcType="INTEGER" property="curRoomCardNum" />
+    <result column="diff_room_card_num" jdbcType="INTEGER" property="diffRoomCardNum" />
+    <result column="amount" jdbcType="INTEGER" property="amount" />
+    <result column="game_type" jdbcType="BIT" property="gameType" />
+    <result column="operator_id" jdbcType="VARCHAR" property="operatorId" />
+    <result column="operator_type" jdbcType="BIT" property="operatorType" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+</mapper>

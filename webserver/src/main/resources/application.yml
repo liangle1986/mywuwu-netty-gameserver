@@ -4,8 +4,8 @@ spring:
       host: localhost
       port: 27017
   redis:
-    host: localhoost
-    port: 8888
+    host: 192.168.2.150
+    port: 6379
     password:
 game:
   servers:
