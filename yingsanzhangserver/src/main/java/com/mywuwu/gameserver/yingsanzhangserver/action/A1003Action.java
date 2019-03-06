@@ -13,8 +13,8 @@ import com.mywuwu.gameserver.core.annotation.Protocol;
 import com.mywuwu.gameserver.core.room.RoomAction;
 import com.mywuwu.gameserver.core.room.RoomContext;
 import com.mywuwu.gameserver.core.websocket.GameWebSocketSession;
-import com.mywuwu.gameserver.data.monoModel.UserModel;
-import com.mywuwu.gameserver.data.monoRepository.UserRepository;
+import com.mywuwu.gameserver.mapper.entity.MywuwuUser;
+import com.mywuwu.gameserver.mapper.service.UserService;
 import com.mywuwu.gameserver.yingsanzhangserver.player.YingSanZhangPlayer;
 import com.mywuwu.gameserver.yingsanzhangserver.protocolData.request.A1003Request;
 import com.mywuwu.gameserver.yingsanzhangserver.protocolData.response.A1003Response;
@@ -46,7 +46,11 @@ public class A1003Action extends BaseAction implements RoomAction<A1003Request, 
     @Autowired
     private YingSanZhangRoomActorManager roomActorManager;
     @Autowired
-    private UserRepository userRepository;
+    private UserService userRepository;
+
+
+
+
 
     @Override
     public void requestAction(TransferData optionalTransferData) throws IOException {
@@ -55,12 +59,12 @@ public class A1003Action extends BaseAction implements RoomAction<A1003Request, 
 
         GameWebSocketSession session = optionalTransferData.getGameWebSocketSession();
 
-        Optional<UserModel> optionalUserModel = this.userRepository.findById(Long.valueOf(id));
+        Optional<MywuwuUser> optionalUserModel = Optional.ofNullable(this.userRepository.selectWeixinCode(id));
 
 
         if (session.getRoomNumber() == null || session.getRoomNumber().isEmpty()) {
             optionalUserModel.ifPresent(userModel -> {
-                if (userModel.getUserType() > 0) {
+                if (userModel.getUserLevel()) {
                     YingSanZhangPlayer p = new YingSanZhangPlayer(1000, true, session);
                     p.setGameWebSocketSession(session);
                     session.setChannel(serverName);

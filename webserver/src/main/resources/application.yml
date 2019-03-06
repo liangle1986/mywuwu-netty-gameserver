@@ -7,6 +7,13 @@ spring:
     host: 192.168.2.150
     port: 6379
     password:
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1ms
+        min-idle: 0
+    timeout: 100ms
 game:
   servers:
     - ip: localhost
