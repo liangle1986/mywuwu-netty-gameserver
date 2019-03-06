@@ -14,6 +14,7 @@
         <module>data</module>
         <module>card</module>
         <module>mapper</module>
+        <module>niuniuserver</module>
     </modules>
     <packaging>pom</packaging>
 
