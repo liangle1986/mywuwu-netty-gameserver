@@ -26,7 +26,7 @@ hall:
     5: niuniu
   name: hallserver
 netty-websocket:
-  host: 192.168.6.248
+  host: 192.168.2.198
   port: 8083
   path: /hall
 jwt:

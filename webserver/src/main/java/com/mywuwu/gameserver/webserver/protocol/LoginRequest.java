@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class LoginRequest {
     private String name;
     private String password;
-    private String wxOpenId;
+//    private String wxOpenId;
 }

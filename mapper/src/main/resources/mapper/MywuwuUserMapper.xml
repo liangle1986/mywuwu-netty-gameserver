@@ -29,6 +29,13 @@
         from mywuwu_user where wx_open_id = #{wxOpenId}
     </select>
 
+    <!--创建-->
+    <insert id="saveGameUser" parameterType="com.mywuwu.gameserver.mapper.entity.MywuwuUser">
+        insert into mywuwu_user(id,nick_name,head_img_url,wx_open_id,room_card_num,
+        user_level,win_probability,create_time,update_time) values(#{id}, #{nickName}, #{headImgUrl}, #{wxOpenId},
+        #{roomCardNum}, #{userLevel},#{winProbability},#{createTime},#{updateTime})
+    </insert>
+
 
     <!--<select id="selectDictInfoList" parameterType="com.metadata.dto.DictInfoDto" resultMap="BaseResultMap">-->
     <!--select * FROM  dict_info${versionCode}-->

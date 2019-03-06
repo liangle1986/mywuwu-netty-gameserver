@@ -16,9 +16,9 @@ spring:
     timeout: 100ms
 game:
   servers:
-    - ip: localhost
+    - ip: 192.168.2.198
       port: 8083
-      name: 服务器1
+      name: 游戏服务器
       path: hall
     - ip: localhost
       port: 8083

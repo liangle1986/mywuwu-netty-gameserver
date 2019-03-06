@@ -18,14 +18,14 @@ import com.mywuwu.gameserver.webserver.protocol.RegisterRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
+@RequestMapping("/api")
 @RestController
 public class LoginController {
 
@@ -56,10 +56,10 @@ public class LoginController {
     }
 
 
-    @PostMapping("api/login")
+    @PostMapping("login")
     public Optional<LoginResponse> login(@RequestBody LoginRequest loginForm) {
 
-        MywuwuUser mywuwuUser = userService.selectWeixinCode(loginForm.getWxOpenId());
+        MywuwuUser mywuwuUser = userService.selectWeixinCode(loginForm.getName());
         //查询sdk等到用户信息
 
 //        验证本地是否有当前用户
@@ -67,6 +67,16 @@ public class LoginController {
 //            用微信sdk更新本地
         } else {
             //创建用户信息到本地
+            mywuwuUser = new MywuwuUser();
+            mywuwuUser.setId(UUID.randomUUID().toString());
+            mywuwuUser.setUserLevel(true);
+            mywuwuUser.setNickName(new Date().toString());
+            mywuwuUser.setHeadImgUrl("http://img/url");
+            mywuwuUser.setRoomCardNum(10000);
+            mywuwuUser.setCreateTime(new Date());
+            mywuwuUser.setUpdateTime(new Date());
+            mywuwuUser.setWinProbability(1);
+            userService.saveGameUser(mywuwuUser);
         }
 
         // 加密生产token
@@ -78,34 +88,21 @@ public class LoginController {
 
         return Optional.of(response);
 
-//        UserModel userModel = userRepository.findByNameAndPassword(loginForm.getName(), loginForm.getPassword());
-/*        if (userModel != null) {
-            String token = jwtTokenUtil.generateToken(userModel.getName());
-            LoginResponse loginResponse = new LoginResponse(userModel.getName(),
-                    userModel.getNickName(),
-                    token,
-                    0,
-                    0,
-                    config.getServers()
-            );
-
-            return Optional.of(loginResponse);
-        }*/
-//        return Optional.empty();
     }
 
     @GetMapping("api/login1")
     public Optional<LoginResponse> login(String wxOpenId) {
-
-        MywuwuUser mywuwuUser = userService.selectWeixinCode(wxOpenId);
-        // 加密生产token
-        String token = jwtTokenUtil.generateToken(mywuwuUser.getNickName());
-
-        //返回用户信息
-        LoginResponse response = new LoginResponse(mywuwuUser.getNickName(), mywuwuUser.getHeadImgUrl(), mywuwuUser.getWxOpenId(), mywuwuUser.getRoomCardNum(), mywuwuUser.getUserLevel()
-                , mywuwuUser.getWinProbability(), config.getServers(), token);
-
-        return Optional.of(response);
+//
+//        MywuwuUser mywuwuUser = userService.selectWeixinCode(wxOpenId);
+//        // 加密生产token
+//        String token = jwtTokenUtil.generateToken(mywuwuUser.getNickName());
+//
+//        //返回用户信息
+//        LoginResponse response = new LoginResponse(mywuwuUser.getNickName(), mywuwuUser.getHeadImgUrl(), mywuwuUser.getWxOpenId(), mywuwuUser.getRoomCardNum(), mywuwuUser.getUserLevel()
+//                , mywuwuUser.getWinProbability(), config.getServers(), token);
+//
+//        return Optional.of(response);
+        return Optional.empty();
     }
 
    /* @GetMapping("api/guest")

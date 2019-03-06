@@ -22,4 +22,10 @@ public class UserServiceImpl implements UserService {
     public MywuwuUser selectWeixinCode(String wxOpenId) {
         return mywuwuUserMapper.selectWeixinCode(wxOpenId);
     }
+
+    @Override
+    public void saveGameUser(MywuwuUser user) {
+        mywuwuUserMapper.saveGameUser(user);
+    }
+
 }
