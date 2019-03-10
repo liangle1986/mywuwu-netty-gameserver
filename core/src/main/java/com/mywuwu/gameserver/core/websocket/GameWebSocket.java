@@ -49,7 +49,7 @@ public abstract class GameWebSocket {
         String token = parameterMap.getParameter("token");
 //        jwtTokenUtil.validateToken(token, id)
 
-        if (true) {
+        if (jwtTokenUtil.validateToken(token, id)) {
 
             map.put(session.id(), session);
 

@@ -11,6 +11,6 @@
 
     <groupId>com.mywuwu.gameserver</groupId>
     <artifactId>card</artifactId>
-
+    <packaging>jar</packaging>
 
 </project>

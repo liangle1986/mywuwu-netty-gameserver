@@ -76,6 +76,7 @@ public class LoginController {
             mywuwuUser.setCreateTime(new Date());
             mywuwuUser.setUpdateTime(new Date());
             mywuwuUser.setWinProbability(1);
+            mywuwuUser.setWxOpenId(mywuwuUser.getId());
             userService.saveGameUser(mywuwuUser);
         }
 
@@ -90,8 +91,37 @@ public class LoginController {
 
     }
 
-    @GetMapping("api/login1")
-    public Optional<LoginResponse> login(String wxOpenId) {
+    @GetMapping("login1")
+    public Optional<LoginResponse> login(String name, String password) {
+        MywuwuUser mywuwuUser = userService.selectWeixinCode(name);
+        //查询sdk等到用户信息
+
+//        验证本地是否有当前用户
+        if (mywuwuUser != null) {
+//            用微信sdk更新本地
+        } else {
+            //创建用户信息到本地
+            mywuwuUser = new MywuwuUser();
+            mywuwuUser.setId(UUID.randomUUID().toString());
+            mywuwuUser.setUserLevel(true);
+            mywuwuUser.setNickName(new Date().toString());
+            mywuwuUser.setHeadImgUrl("http://img/url");
+            mywuwuUser.setRoomCardNum(10000);
+            mywuwuUser.setCreateTime(new Date());
+            mywuwuUser.setUpdateTime(new Date());
+            mywuwuUser.setWinProbability(1);
+            mywuwuUser.setWxOpenId(mywuwuUser.getId());
+            userService.saveGameUser(mywuwuUser);
+        }
+
+        // 加密生产token
+        String token = jwtTokenUtil.generateToken(mywuwuUser.getNickName());
+
+        //返回用户信息
+        LoginResponse response = new LoginResponse(mywuwuUser.getNickName(), mywuwuUser.getHeadImgUrl(), mywuwuUser.getWxOpenId(), mywuwuUser.getRoomCardNum(), mywuwuUser.getUserLevel()
+                , mywuwuUser.getWinProbability(), config.getServers(), token);
+
+        return Optional.of(response);
 //
 //        MywuwuUser mywuwuUser = userService.selectWeixinCode(wxOpenId);
 //        // 加密生产token
@@ -102,7 +132,7 @@ public class LoginController {
 //                , mywuwuUser.getWinProbability(), config.getServers(), token);
 //
 //        return Optional.of(response);
-        return Optional.empty();
+//        return Optional.empty();
     }
 
    /* @GetMapping("api/guest")

@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>com.mywuwu.gameserver</groupId>
 	<artifactId>mapper</artifactId>
-
+	<packaging>jar</packaging>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

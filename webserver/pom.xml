@@ -11,7 +11,7 @@
 
     <groupId>com.mywuwu.gameserver</groupId>
     <artifactId>webserver</artifactId>
-
+    <packaging>jar</packaging>
 
     <dependencies>
 
@@ -38,17 +38,11 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>com.mywuwu.gameserver</groupId>-->
-            <!--<artifactId>data</artifactId>-->
-            <!--<version>0.0.1-SNAPSHOT</version>-->
-        <!--</dependency>-->
 
         <dependency>
             <groupId>com.mywuwu.gameserver</groupId>
             <artifactId>mapper</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 
@@ -57,6 +51,16 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.mywuwu.gameserver.webserver.WebServerApplication</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
