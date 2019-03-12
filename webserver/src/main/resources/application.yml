@@ -5,7 +5,7 @@ spring:
       port: 27017
       database: mywuwu
   redis:
-    host: 192.168.2.150
+    host: 106.13.39.143
     port: 6379
     password:
     lettuce:

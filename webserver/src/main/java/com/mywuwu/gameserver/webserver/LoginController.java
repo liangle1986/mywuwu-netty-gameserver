@@ -20,6 +20,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.Optional;
 
 @RequestMapping("/api")
@@ -35,7 +36,6 @@ public class LoginController {
     private final RedisTemplate redisTemplate;
 
     private final JwtTokenUtil jwtTokenUtil;
-
 
 
     @Autowired
@@ -81,7 +81,7 @@ public class LoginController {
         //返回用户信息
         LoginResponse response = new LoginResponse(userModel.getId(), userModel.getName(), userModel.getNickName(), userModel.getMobileNumber(),
                 userModel.getSex(), userModel.getCardNumber()
-                , userModel.getUserType(),userModel.getHeadImgUrl(), config.getServers(), token);
+                , userModel.getUserType(), userModel.getHeadImgUrl(), config.getServers(), token);
 
         return Optional.of(response);
 
@@ -114,11 +114,16 @@ public class LoginController {
         //返回用户信息
         LoginResponse response = new LoginResponse(userModel.getId(), userModel.getName(), userModel.getNickName(), userModel.getMobileNumber(),
                 userModel.getSex(), userModel.getCardNumber()
-                , userModel.getUserType(),userModel.getHeadImgUrl(), config.getServers(), token);
+                , userModel.getUserType(), userModel.getHeadImgUrl(), config.getServers(), token);
+
+
+        GameWebSocketSession gameWebSocketSession = new GameWebSocketSession(userModel.getId() + "", null, token, new Date().toString(),
+                "", null, "", "", "");
+
+        valueOperationsByGameWebSocketSession.set(userModel.getId() + "", gameWebSocketSession);
 
         return Optional.of(response);
     }
-
 
 
     @GetMapping("api/guest")
