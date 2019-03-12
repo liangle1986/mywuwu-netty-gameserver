@@ -1,6 +1,6 @@
 /*
- * @author   作者: qugang
- * @E-mail   邮箱: qgass@163.com
+ * @author   作者: lianglele
+ * @E-mail   邮箱: liangle1986@126.com
  * @date     创建时间：2018/11/12
  * 类说明     基于WebFlex 登陆模块
  */
@@ -8,8 +8,8 @@ package com.mywuwu.gameserver.webserver;
 
 import com.mywuwu.gameserver.core.security.JwtTokenUtil;
 import com.mywuwu.gameserver.core.websocket.GameWebSocketSession;
-import com.mywuwu.gameserver.mapper.entity.MywuwuUser;
-import com.mywuwu.gameserver.mapper.service.UserService;
+import com.mywuwu.gameserver.data.monoModel.UserModel;
+import com.mywuwu.gameserver.data.monoRepository.UserRepository;
 import com.mywuwu.gameserver.webserver.config.GameConfig;
 import com.mywuwu.gameserver.webserver.protocol.GuestResponse;
 import com.mywuwu.gameserver.webserver.protocol.LoginRequest;
@@ -20,16 +20,13 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @RequestMapping("/api")
 @RestController
 public class LoginController {
 
-//    private final UserRepository userRepository;
+    private final UserRepository userRepository;
 
     private final GameConfig config;
 
@@ -39,53 +36,52 @@ public class LoginController {
 
     private final JwtTokenUtil jwtTokenUtil;
 
-    private final UserService userService;
 
 
     @Autowired
     public LoginController(
             GameConfig config,
             RedisTemplate redisTemplate,
-            JwtTokenUtil jwtTokenUtil, UserService userService) {
-//        this.userRepository = userRepository;
+            JwtTokenUtil jwtTokenUtil,
+            UserRepository userRepository
+    ) {
+        this.userRepository = userRepository;
         this.config = config;
         this.redisTemplate = redisTemplate;
         this.jwtTokenUtil = jwtTokenUtil;
         this.valueOperationsByGameWebSocketSession = this.redisTemplate.opsForValue();
-        this.userService = userService;
     }
 
 
     @PostMapping("login")
     public Optional<LoginResponse> login(@RequestBody LoginRequest loginForm) {
 
-        MywuwuUser mywuwuUser = userService.selectWeixinCode(loginForm.getName());
+        UserModel userModel = userRepository.findByNameAndPassword(loginForm.getName(), loginForm.getPassword());
         //查询sdk等到用户信息
 
 //        验证本地是否有当前用户
-        if (mywuwuUser != null) {
+        if (userModel != null) {
 //            用微信sdk更新本地
         } else {
             //创建用户信息到本地
-            mywuwuUser = new MywuwuUser();
-            mywuwuUser.setId(UUID.randomUUID().toString());
-            mywuwuUser.setUserLevel(true);
-            mywuwuUser.setNickName(new Date().toString());
-            mywuwuUser.setHeadImgUrl("http://img/url");
-            mywuwuUser.setRoomCardNum(10000);
-            mywuwuUser.setCreateTime(new Date());
-            mywuwuUser.setUpdateTime(new Date());
-            mywuwuUser.setWinProbability(1);
-            mywuwuUser.setWxOpenId(mywuwuUser.getId());
-            userService.saveGameUser(mywuwuUser);
+            userModel = new UserModel();
+            userModel.setName(loginForm.getName());
+            userModel.setNickName(loginForm.getName());
+            userModel.setPassword(loginForm.getPassword());
+            userModel.setMobileNumber("123214324");
+            userModel.setUserType(0);
+            userModel.setSex(0);
+            userModel.setCardNumber(0);
+            userRepository.save(userModel);
         }
 
         // 加密生产token
-        String token = jwtTokenUtil.generateToken(mywuwuUser.getNickName());
+        String token = jwtTokenUtil.generateToken(userModel.getNickName());
 
         //返回用户信息
-        LoginResponse response = new LoginResponse(mywuwuUser.getNickName(), mywuwuUser.getHeadImgUrl(), mywuwuUser.getWxOpenId(), mywuwuUser.getRoomCardNum(), mywuwuUser.getUserLevel()
-                , mywuwuUser.getWinProbability(), config.getServers(), token);
+        LoginResponse response = new LoginResponse(userModel.getId(), userModel.getName(), userModel.getNickName(), userModel.getMobileNumber(),
+                userModel.getSex(), userModel.getCardNumber()
+                , userModel.getUserType(),userModel.getHeadImgUrl(), config.getServers(), token);
 
         return Optional.of(response);
 
@@ -93,52 +89,40 @@ public class LoginController {
 
     @GetMapping("login1")
     public Optional<LoginResponse> login(String name, String password) {
-        MywuwuUser mywuwuUser = userService.selectWeixinCode(name);
+        UserModel userModel = userRepository.findByNameAndPassword(name, password);
         //查询sdk等到用户信息
 
 //        验证本地是否有当前用户
-        if (mywuwuUser != null) {
+        if (userModel != null) {
 //            用微信sdk更新本地
         } else {
             //创建用户信息到本地
-            mywuwuUser = new MywuwuUser();
-            mywuwuUser.setId(UUID.randomUUID().toString());
-            mywuwuUser.setUserLevel(true);
-            mywuwuUser.setNickName(new Date().toString());
-            mywuwuUser.setHeadImgUrl("http://img/url");
-            mywuwuUser.setRoomCardNum(10000);
-            mywuwuUser.setCreateTime(new Date());
-            mywuwuUser.setUpdateTime(new Date());
-            mywuwuUser.setWinProbability(1);
-            mywuwuUser.setWxOpenId(mywuwuUser.getId());
-            userService.saveGameUser(mywuwuUser);
+            userModel = new UserModel();
+            userModel.setName(name);
+            userModel.setNickName(name);
+            userModel.setPassword(password);
+            userModel.setMobileNumber("123214324");
+            userModel.setUserType(0);
+            userModel.setSex(0);
+            userModel.setCardNumber(0);
+            userRepository.save(userModel);
         }
 
         // 加密生产token
-        String token = jwtTokenUtil.generateToken(mywuwuUser.getNickName());
+        String token = jwtTokenUtil.generateToken(userModel.getNickName());
 
         //返回用户信息
-        LoginResponse response = new LoginResponse(mywuwuUser.getNickName(), mywuwuUser.getHeadImgUrl(), mywuwuUser.getWxOpenId(), mywuwuUser.getRoomCardNum(), mywuwuUser.getUserLevel()
-                , mywuwuUser.getWinProbability(), config.getServers(), token);
+        LoginResponse response = new LoginResponse(userModel.getId(), userModel.getName(), userModel.getNickName(), userModel.getMobileNumber(),
+                userModel.getSex(), userModel.getCardNumber()
+                , userModel.getUserType(),userModel.getHeadImgUrl(), config.getServers(), token);
 
         return Optional.of(response);
-//
-//        MywuwuUser mywuwuUser = userService.selectWeixinCode(wxOpenId);
-//        // 加密生产token
-//        String token = jwtTokenUtil.generateToken(mywuwuUser.getNickName());
-//
-//        //返回用户信息
-//        LoginResponse response = new LoginResponse(mywuwuUser.getNickName(), mywuwuUser.getHeadImgUrl(), mywuwuUser.getWxOpenId(), mywuwuUser.getRoomCardNum(), mywuwuUser.getUserLevel()
-//                , mywuwuUser.getWinProbability(), config.getServers(), token);
-//
-//        return Optional.of(response);
-//        return Optional.empty();
     }
 
-   /* @GetMapping("api/guest")
+
+
+    @GetMapping("api/guest")
     public GuestResponse guest(String deviceId) {
-        List<User> list = userService.getTest();
-        System.out.println(list.size());
         UserModel userModel = userRepository.findByNameAndUserType(deviceId, 1);
         if (userModel == null) {
             userModel = new UserModel();
@@ -148,7 +132,7 @@ public class LoginController {
             userModel.setCardNumber(3);
             userModel.setMobileNumber("");
             userModel.setPassword("");
-            userModel.setSex("0");
+            userModel.setSex(0);
             userModel.setSponsor("");
             userModel.setUserType(1);
             userRepository.save(userModel);
@@ -177,10 +161,10 @@ public class LoginController {
         userModel.setCardNumber(3);
         userModel.setMobileNumber(registerForm.getMobileNumber());
         userModel.setPassword(registerForm.getPassword());
-        userModel.setSex("0");
+        userModel.setSex(0);
         userModel.setSponsor("");
         userModel.setUserType(0);
         userRepository.save(userModel);
         return userModel;
-    }*/
+    }
 }

@@ -1,8 +1,8 @@
 spring:
-#  data:
-#    mongodb:
-#      host: localhost
-#      port: 27017
+  data:
+    mongodb:
+      host: 106.13.39.143
+      port: 27017
   redis:
     host: 192.168.2.150
     port: 6379

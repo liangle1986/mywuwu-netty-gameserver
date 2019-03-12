@@ -16,11 +16,11 @@ public class UserModel {
     private String nickName;
     private String password;
     private String mobileNumber;
-    private String sex;
+    private int sex;
     private double balance;
     private String sponsor;
     private int cardNumber;
-
+    private String headImgUrl;
     //0 用户 1 访客
     private int userType;
 }

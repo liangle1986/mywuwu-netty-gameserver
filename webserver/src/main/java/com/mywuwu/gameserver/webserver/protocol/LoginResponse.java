@@ -12,17 +12,15 @@ import java.util.List;
 @NoArgsConstructor
 public class LoginResponse {
 
+    private long userId;
+    private String name;
     private String nickName;
-
+    private String mobileNumber;
+    private int sex;
+    private int cardNumber;
+    //0 用户 1 访客
+    private int userType;
     private String headImgUrl;
-
-    private String wxOpenId;
-
-    private Integer roomCardNum;
-
-    private Boolean userLevel;
-
-    private Integer winProbability;
 
     private List<GameServerList> gameServerLists;
 
