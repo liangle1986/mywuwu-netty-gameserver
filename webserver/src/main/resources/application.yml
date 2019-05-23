@@ -14,7 +14,7 @@ spring:
         max-idle: 8
         max-wait: -1ms
         min-idle: 0
-    timeout: 100ms
+    timeout: 500ms
 game:
   servers:
     - ip: 192.168.2.198

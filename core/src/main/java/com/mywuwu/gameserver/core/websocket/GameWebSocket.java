@@ -109,8 +109,8 @@ public abstract class GameWebSocket {
             buffer = Arrays.copyOfRange(bytes, 3, bytes.length);
 
         Attribute<String> attributeName = session.channel().attr(channelNameKey);
-        channel = 2;
-        protocol = 1003;
+//        channel = 2;
+//        protocol = 1003;
         ValueOperations<String, GameWebSocketSession> valueOperationsByGameWebSocketSession = this.redisTemplate.opsForValue();
         GameWebSocketSession gameWebSocketSession = valueOperationsByGameWebSocketSession.get(attributeName.get());
         receiveHandle(gameWebSocketSession,
@@ -145,31 +145,15 @@ public abstract class GameWebSocket {
         JSONObject obj = JSON.parseObject(message);
         int channel = obj.getInteger("channel");
         int protocol = obj.getInteger("protocol");
-//                obj.getString("id");
         byte[] data = obj.getString("data").getBytes();
-
-
         Attribute<String> attributeName = session.channel().attr(channelNameKey);
-
         ValueOperations<String, GameWebSocketSession> valueOperationsByGameWebSocketSession = this.redisTemplate.opsForValue();
         GameWebSocketSession gameWebSocketSession = valueOperationsByGameWebSocketSession.get(attributeName.get());
-        receiveHandle(gameWebSocketSession, channel, protocol, data);
-
-//        ValueOperations<String, GameWebSocketSession> valueOperationsByGameWebSocketSession = this.redisTemplate.opsForValue();
-//        GameWebSocketSession gameWebSocketSession = valueOperationsByGameWebSocketSession.get(attributeName.get());
-//        System.out.println(message + "=======" + map.get(session.id()));
-//        ValueOperations<String, GameWebSocketSession> valueOperationsByGameWebSocketSession = this.redisTemplate.opsForValue();
-//        Map<String, Object> map = new HashMap<>();
-//        map.put("playerLowerlimit","1");
-//        map.put("playerUpLimit","5");
-//        map.put("xiaZhuTop","2");
-//        map.put("juShu","15");
-//        GameWebSocketSession gameWebSocketSession = valueOperationsByGameWebSocketSession.get(id);
-//        gameWebSocketSession.setSessionId(session.id());
-//        gameWebSocketSession.setRoomNumber("10006");
-//        TransferData transferData = new TransferData(gameWebSocketSession, "yingsanzhang", 1003, JSON.toJSONString(map).getBytes());
-//        onMessageHandle(transferData);
-//        session.sendText("Hello Netty!");
+        receiveHandle(gameWebSocketSession,
+                channel,
+                protocol,
+                data
+        );
 
     }
 
@@ -180,7 +164,7 @@ public abstract class GameWebSocket {
 
     protected abstract void closeHandle(GameWebSocketSession session);
 
-    protected abstract void onMessageHandle(TransferData transferData);
+//    protected abstract void onMessageHandle(TransferData transferData);
 
     public static void send(int channel, int protocol, ChannelId sessionId, byte[] buffer) {
         Session session = map.get(sessionId);

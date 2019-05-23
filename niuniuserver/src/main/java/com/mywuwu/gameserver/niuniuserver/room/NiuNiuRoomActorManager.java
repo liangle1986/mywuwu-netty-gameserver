@@ -53,7 +53,7 @@ public class NiuNiuRoomActorManager extends RoomManager {
         String roomNumber = RedisTool.getRoomId(this.redisTemplate, "room", -1);
 //                RedisTool.inc(this.redisTemplate, "room", -1);
 
-        NiuNiuRoomContext niuNiuRoomContext = (NiuNiuRoomContext) context.getBean("NiuNiuRoomContext"
+        NiuNiuRoomContext niuNiuRoomContext = (NiuNiuRoomContext) context.getBean(NiuNiuRoomContext.class
                 , roomNumber,
                 playerUpLimit,
                 playerLowerlimit,

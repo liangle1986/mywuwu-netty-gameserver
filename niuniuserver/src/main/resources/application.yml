@@ -3,8 +3,9 @@ spring:
     mongodb:
       host: 106.13.39.143
       port: 27017
+      database: mywuwu
   redis:
-    host: 192.168.2.150
+    host: 106.13.39.143
     port: 6379
     password:
     lettuce:
@@ -13,7 +14,7 @@ spring:
         max-idle: 8
         max-wait: -1ms
         min-idle: 0
-    timeout: 100ms
+    timeout: 500ms
 logicserver:
   name: niuniu
   connector: hallserver

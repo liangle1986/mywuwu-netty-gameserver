@@ -4,10 +4,11 @@ logging:
 spring:
   data:
     mongodb:
-      host: localhost
+      host: 106.13.39.143
       port: 27017
+      database: mywuwu
   redis:
-    host: 192.168.2.150
+    host: 106.13.39.143
     port: 6379
     password:
     lettuce:
@@ -26,7 +27,7 @@ hall:
     5: niuniu
   name: hallserver
 netty-websocket:
-  host: 192.168.2.198
+  host: 192.168.3.6
   port: 8083
   path: /hall
 jwt:

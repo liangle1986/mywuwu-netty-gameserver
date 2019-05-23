@@ -34,6 +34,7 @@ public class A1004Action extends BaseAction implements RoomAction<A1004Request, 
     @Override
     public void requestAction(TransferData optionalTransferData) throws IOException {
 
+        //获取要加入房间到数据参数
         if (optionalTransferData.getData() != null) {
             try {
                 A1004Request a1004Request = unPackJson(optionalTransferData.getData(), A1004Request.class);
@@ -47,17 +48,24 @@ public class A1004Action extends BaseAction implements RoomAction<A1004Request, 
 
     @Override
     public void roomAction(A1004Request message, NiuNiuRoomContext context) {
+        //获取redis中的session
         GameWebSocketSession session = this.valueOperationsByGameWebSocketSession.get(message.getName());
+
+        //创建字节的牛牛对象
         NiuNiuPlayer player = new NiuNiuPlayer(0, true, session);
 
         //验证房间人数上限
         if (context.getPlayerList().size() <= context.getPlayerUpLimit()) {
+            //把自己的牌加入到对象中
             context.getPlayerList().add(player);
+            //房间记录下来
             session.setRoomNumber(context.getRoomNumber());
             session.setChannel(context.getServerName());
 
+            //重新设置缓存
             this.valueOperationsByGameWebSocketSession.set(player.getGameWebSocketSession().getId(), session);
 
+            //通知房间所有玩家
             context.sendAll(new A1004Response(context.getPlayerList().toArray(new NiuNiuPlayer[0])[0], context.getRoomNumber()), 1004);
 
             // 判断是否符合最小开局人数

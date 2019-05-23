@@ -59,11 +59,11 @@ public class GameServer extends GameWebSocket {
         }
     }
 
-    @Override
-    protected void onMessageHandle(TransferData transferData) {
-        if(transferData != null){
-            this.redisTemplate.convertAndSend(transferData.getChannel(), transferData);
-        }
-    }
+//    @Override
+//    protected void onMessageHandle(TransferData transferData) {
+//        if(transferData != null){
+//            this.redisTemplate.convertAndSend(transferData.getChannel(), transferData);
+//        }
+//    }
 
 }

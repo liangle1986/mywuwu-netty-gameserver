@@ -52,8 +52,14 @@ public class LoginController {
         this.valueOperationsByGameWebSocketSession = this.redisTemplate.opsForValue();
     }
 
+    @GetMapping("login")
+    public Optional<LoginResponse> getLogin(String name, String password) {
+        LoginRequest loginForm = new LoginRequest(name, password);
+        return this.login(loginForm);
+    }
 
     @PostMapping("login")
+//    @GetMapping("login")
     public Optional<LoginResponse> login(@RequestBody LoginRequest loginForm) {
 
         UserModel userModel = userRepository.findByNameAndPassword(loginForm.getName(), loginForm.getPassword());
@@ -83,11 +89,23 @@ public class LoginController {
                 userModel.getSex(), userModel.getCardNumber()
                 , userModel.getUserType(), userModel.getHeadImgUrl(), config.getServers(), token);
 
+      /*  valueOperationsByGameWebSocketSession = this.redisTemplate.opsForValue();
+
+        if(valueOperationsByGameWebSocketSession == null){
+            GameWebSocketSession gameWebSocketSession = new GameWebSocketSession(userModel.getId() + "", null, token, new Date().toString(),
+                    "", null, "", "", "");
+
+            valueOperationsByGameWebSocketSession.set(userModel.getId() + "", gameWebSocketSession);
+        }*/
+
+
+
+
         return Optional.of(response);
 
     }
 
-    @GetMapping("login1")
+    /*@GetMapping("login1")
     public Optional<LoginResponse> login(String name, String password) {
         UserModel userModel = userRepository.findByNameAndPassword(name, password);
         //查询sdk等到用户信息
@@ -123,7 +141,7 @@ public class LoginController {
         valueOperationsByGameWebSocketSession.set(userModel.getId() + "", gameWebSocketSession);
 
         return Optional.of(response);
-    }
+    }*/
 
 
     @GetMapping("api/guest")
@@ -171,5 +189,18 @@ public class LoginController {
         userModel.setUserType(0);
         userRepository.save(userModel);
         return userModel;
+    }
+
+    /**
+     * 获取公告
+     * @param noticeType 公告类型
+     * @return
+     */
+    @GetMapping("loadNotice")
+    public String loadNotice(String noticeType){
+
+        String notice = "欢迎来带游戏世界，让我们一起愉快到玩耍吧！如有问题请联系微信：WX********";
+        return notice;
+
     }
 }

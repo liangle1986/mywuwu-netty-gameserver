@@ -48,7 +48,7 @@ public class RedisTool {
                 newValue = isNumber(newValue);
             }
         } else {
-            newValue = 1000000 + number;
+            newValue = 100000 + number;
         }
         return  newValue;
     }
