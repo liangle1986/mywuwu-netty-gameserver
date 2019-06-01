@@ -1,0 +1,6 @@
+您好，首先感谢你们贡献这个游戏服务器代码，我非常感兴趣！但是在阅读您写的代码过程中，有些不理解
+     sendAll(new A1005Response(this.playerList.toArray(new YingSanZhangPlayer[0]), currentPlayer), 1005);
+     
+ 这个代码是会由redis发布订阅最终指向1005Action对吧，但是我没有找到这个Action呢
+
+如果方便的话，留一个联系方式，或者您加我QQ:27816103
